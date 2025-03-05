@@ -30,6 +30,17 @@ class Orszag:
         for megye in self.megyek:
             print(f"Megye neve: {megye.nev}, székhelye: {megye.szekhely}.")
 
+    def csoportosit_regiok_szerint(self):
+        regionális_megyék = {}
+        for megye in self.megyek:
+            if megye.regio not in regionális_megyék:
+                regionális_megyék[megye.regio] = []
+            regionális_megyék[megye.regio].append(megye)
+
+
+        for regio, megyek in regionális_megyék.items():
+            print(f"{regio} régióban {len(megyek)} megye található.")
+
 
 with open("vármegyék.csv","r", encoding="utf-8") as fajl:
     sorok = fajl.readlines()
@@ -48,6 +59,7 @@ print("Magyarország átlag népessége megyénként: ", int(magyarorszag.atlag_
 print("Minden megye székhelye: ")
 magyarorszag.összes_megye_szekhely()
 
+magyarorszag.csoportosit_regiok_szerint()
 
 
 # Csoportosítsd a megyéket régiók szerint, és írd ki, hogy mely régióban hány megye található.
