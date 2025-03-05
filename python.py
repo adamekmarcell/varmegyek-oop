@@ -13,15 +13,24 @@ class Orszag:
         self.megyek = megyek
 
     def legnepesebb_megye(self):
-        return max(self.megyek, key=lambda n: n.lakossag)
+        return max(self.megyek, key=lambda m: m.lakossag)
     
-    def legnagyobb_megye(self):
-        return max(self.megyek, key=lambda t: t.terulet)
+    def legkisebb_megye(self):
+        return min(self.megyek, key=lambda m: m.terulet)
     
     def összes_megye_adat(self):
         for megye in self.megyek:
             print(f"Megye neve: {megye.nev}, székhelye: {megye.szekhely}, területe: {megye.terulet}m^2, városok száma: {megye.varosok_szama} db, népsűrűség: {megye.nepsuruseg} fő/km^2, lakosság: {megye.lakossag} fő, régió: {megye.regio}")
+
+    def atlag_nepesseg(self):
+        ossz_nepesseg = sum(m.lakossag for m in self.megyek) 
+        return ossz_nepesseg / len(self.megyek)
     
+    def összes_megye_szekhely(self):
+        for megye in self.megyek:
+            print(f"Megye neve: {megye.nev}, székhelye: {megye.szekhely}.")
+
+
 with open("vármegyék.csv","r", encoding="utf-8") as fajl:
     sorok = fajl.readlines()
 
@@ -29,17 +38,18 @@ megyek = [Megye(*sor.strip().split(",")) for sor in sorok[1:]]
 
 magyarorszag = Orszag(megyek)
 
-print("Összes megyének a neve: ", magyarorszag.összes_megye_adat())
+print("Összes megyének a neve: ")
+magyarorszag.összes_megye_adat()
 
 print("Legnépesebb megye", magyarorszag.legnepesebb_megye().nev)
-print("Legnagyobb területű megye", magyarorszag.legnagyobb_megye().nev)
+print("Legkisebb területű megye", magyarorszag.legkisebb_megye().nev)
+print("Magyarország átlag népessége megyénként: ", int(magyarorszag.atlag_nepesseg()))
+
+print("Minden megye székhelye: ")
+magyarorszag.összes_megye_szekhely()
 
 
-# Olvasd be a CSV fájlt, és jelenítsd meg az összes megye adatát.
-# Írj egy programot, amely megtalálja és kiírja a legnépesebb megyét.
-# Írj egy programot, amely megtalálja a legkisebb területű megyét.
-# Számítsd ki és írd ki az összes megye átlagos népsűrűségét.
-# Jelenítsd meg az összes megyeszékhely nevét.
+
 # Csoportosítsd a megyéket régiók szerint, és írd ki, hogy mely régióban hány megye található.
 # Írj egy programot, amely megtalálja azt a megyét, amelyik a legtöbb várossal rendelkezik.
 # Rendezd a megyéket lakosság szerint csökkenő sorrendben, és írd ki az első 5-öt.
