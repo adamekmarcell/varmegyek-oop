@@ -41,6 +41,15 @@ class Orszag:
         for regio, megyek in regionális_megyék.items():
             print(f"{regio} régióban {len(megyek)} megye található.")
 
+    def legtobb_varos(self):
+        legtobb_varosu_megye = self.megyek[0]
+
+        for megye in self.megyek:
+            if megye.varosok_szama > legtobb_varosu_megye.varosok_szama:
+                legtobb_varosu_megye = megye
+
+        return legtobb_varosu_megye
+
 
 with open("vármegyék.csv","r", encoding="utf-8") as fajl:
     sorok = fajl.readlines()
@@ -61,8 +70,7 @@ magyarorszag.összes_megye_szekhely()
 
 magyarorszag.csoportosit_regiok_szerint()
 
-
-# Csoportosítsd a megyéket régiók szerint, és írd ki, hogy mely régióban hány megye található.
+print("Legtöbb városú megye: ", magyarorszag.legtobb_varos().nev)
 # Írj egy programot, amely megtalálja azt a megyét, amelyik a legtöbb várossal rendelkezik.
 # Rendezd a megyéket lakosság szerint csökkenő sorrendben, és írd ki az első 5-öt.
 # Írj egy programot, amely kiválogatja és kiírja azokat a megyéket, ahol a népsűrűség nagyobb, mint 100 fő/km².
