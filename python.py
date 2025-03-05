@@ -53,6 +53,14 @@ class Orszag:
     def legnepesebb_lista(self):
         return sorted(self.megyek, key=lambda m: m.lakossag, reverse=True)
 
+    def nagyobb_nepsuruseg(self, limit):
+        keresett_megyek = []
+        for m in self.megyek:
+            if m.nepsuruseg > limit:
+                keresett_megyek.append(m)
+
+        return keresett_megyek
+
 with open("vármegyék.csv","r", encoding="utf-8") as fajl:
     sorok = fajl.readlines()
 
@@ -78,7 +86,10 @@ print("Legnépesebb 5 megye: ")
 for megye in magyarorszag.legnepesebb_lista()[:5]:
     print(f"Megye: {megye.nev}")
 
-# Írj egy programot, amely kiválogatja és kiírja azokat a megyéket, ahol a népsűrűség nagyobb, mint 100 fő/km².
+print("Megyék ahol nagyobb a népességgel:")
+for megye in magyarorszag.nagyobb_nepsuruseg(100):
+    print(f"Megye neve: {megye.nev} sűrűség: {megye.nepsuruseg}")
+
 # Kérj be a felhasználótól egy megye nevét, és írd ki a megye adatait (székhely, terület, lakosság stb.).
 # Legkevésbé népes megye keresése
 # Legnagyobb területű megye
