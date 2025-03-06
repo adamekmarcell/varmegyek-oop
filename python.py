@@ -26,6 +26,10 @@ class Orszag:
         ossz_nepesseg = sum(m.lakossag for m in self.megyek) 
         return ossz_nepesseg / len(self.megyek)
     
+    def atlag_varos(self):
+       ossz_varos = sum(m.varosok_szama for m in self.megyek) 
+       return ossz_varos / len(self.megyek)
+
     def összes_megye_szekhely(self):
         for megye in self.megyek:
             print(f"Megye neve: {megye.nev}, székhelye: {megye.szekhely}.")
@@ -60,6 +64,20 @@ class Orszag:
                 keresett_megyek.append(m)
 
         return keresett_megyek
+    
+    def megye_adatok(self, megye_nev):
+        for m in self.megyek:
+            if m.nev == megye_nev:
+                return m
+            
+        return None
+    
+    def legkevesbe_nepesebb_megye(self):
+        return sorted(self.megyek, key=lambda m: m.lakossag)[0]
+    
+    def legnagyobb_teruletu_megye(self):
+        return sorted(self.megyek, key=lambda m: m.terulet, reverse=True)[0]
+        
 
 with open("vármegyék.csv","r", encoding="utf-8") as fajl:
     sorok = fajl.readlines()
@@ -90,10 +108,13 @@ print("Megyék ahol nagyobb a népességgel:")
 for megye in magyarorszag.nagyobb_nepsuruseg(100):
     print(f"Megye neve: {megye.nev} sűrűség: {megye.nepsuruseg}")
 
-# Kérj be a felhasználótól egy megye nevét, és írd ki a megye adatait (székhely, terület, lakosság stb.).
-# Legkevésbé népes megye keresése
-# Legnagyobb területű megye
-# Városok átlagos száma megyénként
-# Régiók összlakossága
-# Utóbbit exportáld ki egy regio_osszlakossag.txt nevű fájlba áttekinthetően
+megye_nev_adatok = input("Kérem adja meg a megye nevét: ")
+keresett_megye = magyarorszag.megye_adatok(megye_nev_adatok)
+if keresett_megye != None:
+    print(f"Megye neve: {keresett_megye.nev}, székhelye: {keresett_megye.szekhely}, területe: {keresett_megye.terulet}m^2, városok száma: {keresett_megye.varosok_szama} db, népsűrűség: {keresett_megye.nepsuruseg} fő/km^2, lakosság: {keresett_megye.lakossag} fő, régió: {keresett_megye.regio}")
+
+print("Legkevésé népes megye: ", magyarorszag.legkevesbe_nepesebb_megye().nev)
+print("Legnagyobb területű megye: ", magyarorszag.legnagyobb_teruletu_megye().nev)
+print("Átlag száma a vároosoknak: ", int(magyarorszag.atlag_varos()))
+
 
