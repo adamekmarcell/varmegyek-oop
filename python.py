@@ -78,6 +78,23 @@ class Orszag:
     def legnagyobb_teruletu_megye(self):
         return sorted(self.megyek, key=lambda m: m.terulet, reverse=True)[0]
         
+    def regiok_osszlakossaga(self):
+        regionális_megyék = {}
+        for megye in self.megyek:
+            if megye.regio not in regionális_megyék:
+                regionális_megyék[megye.regio] = []
+            regionális_megyék[megye.regio].append(megye)
+
+
+        kimenet = open("regio_osszlakossag.txt", "w", encoding="utf-8")
+        
+        for regio, megyek in regionális_megyék.items():
+            összlakosság = sum(m.lakossag for m in megyek)
+            print(f"{regio} régióban {összlakosság} ember él.")
+            kimenet.write(f"{regio}, lakosság: {összlakosság}\n")
+        
+        kimenet.close()
+
 
 with open("vármegyék.csv","r", encoding="utf-8") as fajl:
     sorok = fajl.readlines()
@@ -117,4 +134,5 @@ print("Legkevésé népes megye: ", magyarorszag.legkevesbe_nepesebb_megye().nev
 print("Legnagyobb területű megye: ", magyarorszag.legnagyobb_teruletu_megye().nev)
 print("Átlag száma a vároosoknak: ", int(magyarorszag.atlag_varos()))
 
+magyarorszag.regiok_osszlakossaga()
 

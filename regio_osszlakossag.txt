@@ -1,0 +1,7 @@
+Dél-Alföld, lakosság: 1400000
+Dél-Dunántúl, lakosság: 920000
+Észak-Magyarország, lakosság: 970000
+Közép-Dunántúl, lakosság: 1060000
+Nyugat-Dunántúl, lakosság: 960000
+Észak-Alföld, lakosság: 1310000
+Közép-Magyarország, lakosság: 1150000
